@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Set a default status bar color (e.g., white)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
         // Optional: make layout draw under status bar
         window.decorView.systemUiVisibility =

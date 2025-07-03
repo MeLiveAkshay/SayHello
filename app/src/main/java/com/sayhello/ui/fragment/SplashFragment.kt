@@ -1,29 +1,26 @@
 package com.sayhello.ui.fragment
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.sayhello.R
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.sayhello.ui.activity.MasterActivity
 
 class SplashFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var logoImage: ImageView
+    private lateinit var appTitle: TextView
+    private lateinit var slogan1: TextView
+    private lateinit var slogan2: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,32 +28,61 @@ class SplashFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
-
+/**
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set status bar color to white
-        requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireContext(), R.color.white)
+        // Set status bar color
+//        requireActivity().window.statusBarColor =
+//            ContextCompat.getColor(requireContext(), R.color.white)
 
-        // If you want a transparent status bar instead, uncomment this:
-        /*
-        requireActivity().window.apply {
-            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                                           View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            statusBarColor = Color.TRANSPARENT
-        }
-        */
+        // Find views by ID
+        logoImage = view.findViewById(R.id.logoImage)
+        appTitle = view.findViewById(R.id.appTitle)
+        slogan1 = view.findViewById(R.id.slogan1)
+        slogan2 = view.findViewById(R.id.slogan2)
+
+        // Apply animations
+        val fadeIn = AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_in)
+        val slideUp = AnimationUtils.loadAnimation(requireContext(), android.R.anim.slide_in_left)
+
+        logoImage.startAnimation(fadeIn)
+        appTitle.startAnimation(slideUp)
+        slogan1.startAnimation(slideUp)
+        slogan2.startAnimation(slideUp)
+
+        // Navigate to MasterActivity after 3 seconds
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(requireContext(), MasterActivity::class.java))
+            requireActivity().finish()
+        }, 3000)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SplashFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+    **/
+
+override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+
+    // Find views by ID
+    logoImage = view.findViewById(R.id.logoImage)
+    appTitle = view.findViewById(R.id.appTitle)
+    slogan1 = view.findViewById(R.id.slogan1)
+    slogan2 = view.findViewById(R.id.slogan2)
+
+    // Load animations (fade in + slide up)
+    val fadeIn = AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_in)
+    val slideUp = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up) // Custom anim
+
+    logoImage.startAnimation(fadeIn)
+    appTitle.startAnimation(slideUp)
+    slogan1.startAnimation(slideUp)
+    slogan2.startAnimation(slideUp)
+
+    // Navigate after delay
+    Handler(Looper.getMainLooper()).postDelayed({
+        startActivity(Intent(requireContext(), MasterActivity::class.java))
+        requireActivity().finish()
+    }, 3000)
+}
+
 }

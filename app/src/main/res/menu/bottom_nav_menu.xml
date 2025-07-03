@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_practice"
 
+        android:title="Practice" />
+    <item
+        android:id="@+id/nav_community"
+
+        android:title="Community" />
+    <item
+        android:id="@+id/nav_profile"
+
+        android:title="Profile" />
 </menu>
